@@ -4,6 +4,8 @@ from dash import html
 from dash.dependencies import Input, Output
 
 import plotly.express as px
+import plotly.graph_objects as go
+
 import pandas as pd
 
 import api_bme_handler as abh 
@@ -63,8 +65,15 @@ def update_ticker_dropdown_value(selected_ticker):
     Output('example-graph','figure'),
     Input('ticker-dropdown','value'))
 def update_figure(selected_ticker):      
-    data = ah.get_close_data_ticker(ticker=selected_ticker)
-    fig = px.line(data)
+    data_to_plot = ah.get_ohlcv_ticker(ticker=selected_ticker)
+    fig = go.Figure(
+        go.Candlestick(
+        x=data_to_plot.index,
+        open=data_to_plot['open'],
+        high=data_to_plot['high'],
+        low=data_to_plot['low'],
+        close=data_to_plot['close']
+        ))
     fig.update_layout(transition_duration=500)
     return fig
 
