@@ -11,10 +11,11 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__,
 external_stylesheets=external_stylesheets)
 
-ah = abh.APIBMEHandler(market='IBEX', algo_tag='hgonzalez_algo1')
+ah = abh.APIBMEHandler(market='IBEX')
 data = ah.get_close_data_ticker('SAN')
 
-fig = px.bar(data)
+#fig = px.bar(data)
+fig = px.line(data)
 
 app.layout = html.Div(children=[
     html.H1(children='Api Handler Dash'),
